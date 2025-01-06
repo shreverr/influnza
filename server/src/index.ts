@@ -1,6 +1,7 @@
 import connectToDb from "./config/db";
 import setHeaders from "./config/headers";
 import { httpLogger, logger } from "./logger";
+import { youtube } from "./datasource";
 
 import express from "express";
 
@@ -17,8 +18,9 @@ app.use(httpLogger);
 })();
 
 if (process.env.NODE_ENV === "development") {
-    app.get("/", (req, res) => {
-        res.send("Welcome to api set up by node-nitro ^_+");
+    app.get("/", async (req, res) => {
+        const data = await youtube.getVideoDetails('cmoTikG4DhQ')
+        res.json(data)
     });
 }
 
